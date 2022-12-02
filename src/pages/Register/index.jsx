@@ -33,16 +33,17 @@ export function Register() {
 		samePassword: yup
 			.string()
 			.required("O campo 'confirmar senha' é obrigatório.")
-			.min(6, "A senha precisa ter pelo menos 6 caracteres.").oneOf([yup.ref('password')], 'As senhas devem ser iguais.'),
-		bio:yup.string(),
+			.min(6, "A senha precisa ter pelo menos 6 caracteres.")
+			.oneOf([yup.ref("password")], "As senhas devem ser iguais."),
+		bio: yup.string(),
 		contact: yup.string(),
-		course_module: yup.string().required("O campo 'Módulo' é obrigatório.")
-	
-		});
+		course_module: yup.string().required("O campo 'Módulo' é obrigatório."),
+	});
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },reset
+		formState: { errors },
+		reset,
 	} = useForm({
 		resolver: yupResolver(registerSchema),
 	});
@@ -52,13 +53,13 @@ export function Register() {
 		try {
 			const request = await api.post("users", data);
 
-			if(request){
+			if (request) {
 				toast.success("Conta criada com sucesso!", {
 					position: toast.POSITION.TOP_RIGHT,
 				});
-				reset()
+				reset();
 				setTimeout(() => {
-					navigate("/login");				
+					navigate("/login");
 				}, 2000);
 			}
 		} catch (error) {
@@ -71,7 +72,7 @@ export function Register() {
 
 	return (
 		<StyledRegister>
-			<StyledToastify/>
+			<StyledToastify />
 			<Header>
 				<StyledLink to="/login">Voltar</StyledLink>
 			</Header>
