@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const StyledRegister = styled.div`
 	background-color: var(--gray100);
 	height: 100%;
+
+	
 	header {
 		div {
 			justify-content: space-between;
@@ -22,7 +24,7 @@ export const StyledRegister = styled.div`
 				width: 100%;
 				display: flex;
 				flex-direction: column;
-				gap: 16px;
+				gap: 16px;				
 
 				label {
 					font-size: var(--font-size-4);

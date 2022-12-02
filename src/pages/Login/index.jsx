@@ -11,6 +11,9 @@ import { api } from "../../services/api";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { StyledToastify } from "../../styles/toastify";
 
 export function Login() {
 	const navigate = useNavigate();
@@ -28,28 +31,41 @@ export function Login() {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm({
 		resolver: yupResolver(loginSchema),
 	});
 
-	
 	async function submit(data) {
-		const request = await api.post("sessions", data);
-			try{
-				const response = await request.data;
-				console.log(request)
-				localStorage.setItem("@kenzieHub:token", response.token)
-				localStorage.setItem("@kenzieHub:userID", JSON.stringify(response.user))
-				navigate("/dashboard")
+		try {
+			const request = await api.post("sessions", data);
+			const response = await request.data;
+
+			if (request) {
+				toast.success("Login realizado com sucesso!", {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+				reset();
+				setTimeout(() => {
+					localStorage.setItem("@kenzieHub:token", response.token);
+					localStorage.setItem(
+						"@kenzieHub:userID",
+						JSON.stringify(response.user)
+					);
+					navigate("/dashboard");
+				}, 3000);
 			}
-			catch (error){
-				console.log(error)
-			}
-			
+		} catch (error) {
+			toast.error("Ops! Algo deu errado", {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+			console.log(error);
+		}
 	}
 
 	return (
 		<StyledLogin>
+			<StyledToastify />
 			<Header />
 			<ContainerMain>
 				<Form submit={handleSubmit(submit)}>
@@ -72,7 +88,7 @@ export function Login() {
 					{errors.password?.message && <span>{errors.password.message}</span>}
 					<Button>Entrar</Button>
 					<div className="registerBox">
-						<span>Ainda não possui uma conta?</span>
+						<p>Ainda não possui uma conta?</p>
 						<StyledLink to="/register">Cadastre-se</StyledLink>
 					</div>
 				</Form>

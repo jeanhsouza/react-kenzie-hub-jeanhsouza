@@ -10,18 +10,24 @@ export const StyledForm = styled.form`
 	color: var(--gray500);
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	gap: 1rem;
 	margin-bottom: 2rem;
 
 	h2 {
 		font-weight: var(--font-weight-1);
 		font-size: var(--font-size-1);
+		text-align: center;
 	}
 
-	span {
+	p {
 		color: var(--gray400);
+		font-weight: var(--font-weight-3);
+		font-size: var(--font-size-3);
+		text-align: center;
+	}
+
+	span{
+		color: var(--negative100);
 		font-weight: var(--font-weight-3);
 		font-size: var(--font-size-3);
 	}
