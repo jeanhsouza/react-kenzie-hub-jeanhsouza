@@ -29,11 +29,11 @@ export function Register() {
 		password: yup
 			.string()
 			.required("O campo 'senha' é obrigatório.")
-			.min(6, "A senha precisa ter pelo menos 6 caracteres."),
+			.matches(/^.{6,}$/, "A senha precisa ter pelo menos 6 caracteres"),
 		samePassword: yup
 			.string()
 			.required("O campo 'confirmar senha' é obrigatório.")
-			.min(6, "A senha precisa ter pelo menos 6 caracteres.")
+			.matches(/^.{6,}$/, "A senha precisa ter pelo menos 6 caracteres")
 			.oneOf([yup.ref("password")], "As senhas devem ser iguais."),
 		bio: yup.string(),
 		contact: yup.string(),

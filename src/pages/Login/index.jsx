@@ -25,7 +25,7 @@ export function Login() {
 		password: yup
 			.string()
 			.required("O campo 'senha' é obrigatório")
-			.min(6, "A senha precisa ter pelo menos 6 caracteres"),
+			.matches(/^.{6,}$/, "A senha precisa ter pelo menos 6 caracteres"),
 	});
 	const {
 		register,
