@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const StyledForm = styled.form`
-	max-width: 370px;	
+	max-width: 23.125rem;
 	background-color: var(--gray200);
-	box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
-	border-radius: 4px;
-	padding: 30px 22px;
+	box-shadow: 0rem 0.25rem 2.5rem -0.625rem rgba(0, 0, 0, 0.25);
+	border-radius: 0.25rem;
+	padding: 1.875rem 1.375rem;
 	width: 100%;
 	color: var(--gray500);
 	display: flex;
@@ -26,13 +26,13 @@ export const StyledForm = styled.form`
 		text-align: center;
 	}
 
-	span{
+	span {
 		color: var(--negative100);
 		font-weight: var(--font-weight-3);
 		font-size: var(--font-size-3);
 	}
 
 	@media (min-width: 900px) {
-		max-width: 370px;
+		max-width: 23.125rem;
 	}
 `;

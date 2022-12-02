@@ -7,15 +7,15 @@ export const StyledDashboard = styled.div`
 		div {
 			justify-content: space-between;
 			align-items: center;
-			padding-top: 30px;
-			padding-bottom: 30px;
+			padding-top: 1.875rem;
+			padding-bottom: 1.875rem;
 
 			Button {
-				width: 70px;
-				padding: 8px;
+				width: 4.375rem;
+				padding: 0.5rem;
 				background-color: var(--gray300);
 				color: var(--white100);
-				border-radius: 8px;
+				border-radius: 0.5rem;
 				font-size: var(--font-size-3);
 				font-weight: var(--font-weight-2);
 				text-align: center;
@@ -29,31 +29,31 @@ export const StyledDashboard = styled.div`
 
 	main {
 		color: var(--gray500);
-		width: 75rem;
+		width: 1200px;
 		margin: 0 auto;
 
 		div {
 			display: flex;
 			flex-direction: column;
-			padding-top: 30px;
-			padding-bottom: 30px;
-			gap: 10px;
-			border-top: 1px solid var(--gray300);
-			border-bottom: 1px solid var(--gray300);
+			padding-top: 1.875rem;
+			padding-bottom: 1.875rem;
+			gap: 1.875rem;
+			border-top: 0.0625rem solid var(--gray300);
+			border-bottom: 0.0625rem solid var(--gray300);
 
 			h1 {
 				font-weight: var(--font-weight-1);
 				font-size: var(--font-size-1);
-				margin-left: 1rem;
-				margin-right: 1rem;
+				margin-left: 16px;
+				margin-right: 16px;
 			}
 
 			span {
 				color: var(--gray400);
 				font-weight: var(--font-weight-3);
 				font-size: var(--font-size-3);
-				margin-left: 1rem;
-				margin-right: 1rem;
+				margin-left: 16px;
+				margin-right: 16px;
 			}
 		}
 	}
@@ -63,6 +63,16 @@ export const StyledDashboard = styled.div`
 			div {
 				flex-direction: row;
 				justify-content: space-between;
+			}
+			div:last-child {
+				flex-direction: column;
+				justify-content: space-between;
+				border-top: 0.0625rem solid transparent;
+				border-bottom: 0.0625rem solid transparent;
+
+				span {
+					color: var(--gray500);
+				}
 			}
 		}
 	}

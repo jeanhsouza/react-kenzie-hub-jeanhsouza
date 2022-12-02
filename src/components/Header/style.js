@@ -5,27 +5,27 @@ export const StyledHeader = styled.header`
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding-bottom: 16px;
-		padding-top: 50px;		
+		padding-bottom: 1rem;
+		padding-top: 3.125rem;
 
 		img {
-			width: 101px;
-			height: 14px;
+			width: 6.3125rem;
+			height: 0.875rem;
 		}
 
-		a{
+		a {
 			width: 20%;
-			padding: 10px 5px;
+			padding: 0.625rem 0.3125rem;
 		}
 	}
 
 	@media (min-width: 900px) {
 		div {
-			padding-left: 0px;
-			padding-right: 0px;
+			padding-left: 0rem;
+			padding-right: 0rem;
 			img {
-				width: 144.06px;
-				height: 19.97px;
+				width: 9.0038rem;
+				height: 1.2481rem;
 			}
 		}
 	}

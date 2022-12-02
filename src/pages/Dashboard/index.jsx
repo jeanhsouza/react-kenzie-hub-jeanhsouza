@@ -37,10 +37,19 @@ export function Dashboard() {
 			</Header>
 			<ContainerMain>
 				{userID && (
-					<div className="UserBox">
-						<h1>Olá, {userID.name}</h1>
-						<span>{userID.course_module}</span>
-					</div>
+					<>
+						<div className="UserBox">
+							<h1>Olá, {userID.name}</h1>
+							<span>{userID.course_module}</span>
+						</div>
+						<div className="userContent">
+							<h1>Que pena! Estamos em desenvolvimento :(</h1>
+							<span>
+								Nossa aplicação está em desenvolvimento, em breve teremos
+								novidades
+							</span>
+						</div>
+					</>
 				)}
 			</ContainerMain>
 		</StyledDashboard>
