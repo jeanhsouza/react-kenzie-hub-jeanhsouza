@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledRegister = styled.div`
 	background-color: var(--gray100);
-	height: 100%;
+	height: fit-content;
 
 	header {
 		div {
