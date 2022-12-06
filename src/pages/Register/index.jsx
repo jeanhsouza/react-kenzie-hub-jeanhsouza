@@ -8,67 +8,40 @@ import { StyledRegister } from "./style";
 import { StyledLink } from "../../components/Link/style";
 
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { api } from "../../services/api";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "./registerSchema";
 
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastify } from "../../styles/toastify";
 
 import { Motion } from "../../components/Motion";
-import { useState } from "react";
+import { UserContext } from "../../Context/UserContext";
+import { useContext } from "react";
 
 export function Register() {
-	const [loading,setLoading] = useState(false)
-	const navigate = useNavigate();
+
+	const {loading, submitRegister} = useContext(UserContext)
+
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
-		reset,
+		formState: { errors }
 	} = useForm({
 		mode: "onBlur",
 		resolver: yupResolver(registerSchema),
 	});
 
-	async function submit(data) {
-		delete data.samePassword;
-		try {
-			setLoading(true)
-			const request = await api.post("users", data);
-
-			if (request) {
-				toast.success("Conta criada com sucesso!", {
-					position: toast.POSITION.TOP_RIGHT,
-				});
-				reset();
-				setTimeout(() => {
-					navigate("/login");
-				}, 2000);
-			}
-		} catch (error) {
-			toast.error("Ops! Algo deu errado", {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-			console.log(error);
-		}
-		finally{
-			setLoading(false)
-		}
-	}
 
 	return (
 		<Motion>
 			<StyledRegister>
-			<StyledToastify />
+			<StyledToastify autoClose={3000}/>
 			<Header>
 				<StyledLink to="/login">Voltar</StyledLink>
 			</Header>
 			<ContainerMain>
-				<Form submit={handleSubmit(submit)}>
+				<Form submit={handleSubmit(submitRegister)}>
 					<h2>Crie a sua conta</h2>
 					<p>Rápido e grátis, vamos nessa!</p>
 					<Input

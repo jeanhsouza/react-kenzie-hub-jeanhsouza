@@ -6,68 +6,35 @@ import { Input } from "../../components/Input";
 import { StyledLink } from "../../components/Link/style";
 import { ContainerMain } from "../../styles/container";
 import { StyledLogin } from "./style";
-import { api } from "../../services/api";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastify } from "../../styles/toastify";
 import { Motion } from "../../components/Motion";
 import { loginSchema } from "./loginSchema";
-import { useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
 
 export function Login() {
-	const [loading, setLoading] = useState(false)
-	const navigate = useNavigate();
+
+	const {loading, submitLogin} = useContext(UserContext)
+
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
-		reset,
+		formState: { errors }
 	} = useForm({
 		mode: "onChange",
 		resolver: yupResolver(loginSchema),
 	});
 
-	async function submit(data) {
-		try {
-			setLoading(true);
-			const request = await api.post("sessions", data);
-			const response = await request.data;
-
-			if (request) {
-				toast.success("Login realizado com sucesso!", {
-					position: toast.POSITION.TOP_RIGHT,
-				});
-				reset();
-				setTimeout(() => {
-					localStorage.setItem("@kenzieHub:token", response.token);
-					localStorage.setItem(
-						"@kenzieHub:userID",
-						JSON.stringify(response.user)
-					);
-					navigate("/dashboard");
-				}, 3000);
-			}
-		} catch (error) {
-			toast.error("Ops! Algo deu errado", {
-				position: toast.POSITION.TOP_RIGHT,
-			});
-			console.log(error);
-		}
-		finally{
-			setLoading(false)
-		}
-	}
-
 	return (
 		<Motion>
 			<StyledLogin>
-			<StyledToastify />
+			<StyledToastify autoClose={3000} />
 			<Header />
 			<ContainerMain>
-				<Form submit={handleSubmit(submit)}>
+				<Form submit={handleSubmit(submitLogin)}>
 					<h2>Login</h2>
 					<Input
 						label="Email"
