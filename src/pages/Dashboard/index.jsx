@@ -6,6 +6,7 @@ import { StyledToastify } from "../../styles/toastify";
 import { StyledDashboard } from "./style";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import { Motion } from "../../components/Motion";
 
 export function Dashboard() {
 	const navigate = useNavigate();
@@ -30,7 +31,8 @@ export function Dashboard() {
 	}
 
 	return (
-		<StyledDashboard>
+		<Motion>
+			<StyledDashboard>
 			<StyledToastify />
 			<Header>
 				<Button click={handleClick}>Sair</Button>
@@ -53,5 +55,6 @@ export function Dashboard() {
 				)}
 			</ContainerMain>
 		</StyledDashboard>
+		</Motion>
 	);
 }

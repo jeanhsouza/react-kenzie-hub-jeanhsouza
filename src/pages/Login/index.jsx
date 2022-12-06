@@ -9,35 +9,30 @@ import { StyledLogin } from "./style";
 import { api } from "../../services/api";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastify } from "../../styles/toastify";
+import { Motion } from "../../components/Motion";
+import { loginSchema } from "./loginSchema";
+import { useState } from "react";
 
 export function Login() {
+	const [loading, setLoading] = useState(false)
 	const navigate = useNavigate();
-	const loginSchema = yup.object().shape({
-		email: yup
-			.string()
-			.required("O campo 'e-mail' é obrigatório")
-			.email("Preencha um e-mail válido"),
-		password: yup
-			.string()
-			.required("O campo 'senha' é obrigatório")
-			.matches(/^.{6,}$/, "A senha precisa ter pelo menos 6 caracteres"),
-	});
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
 	} = useForm({
+		mode: "onChange",
 		resolver: yupResolver(loginSchema),
 	});
 
 	async function submit(data) {
 		try {
+			setLoading(true);
 			const request = await api.post("sessions", data);
 			const response = await request.data;
 
@@ -61,10 +56,14 @@ export function Login() {
 			});
 			console.log(error);
 		}
+		finally{
+			setLoading(false)
+		}
 	}
 
 	return (
-		<StyledLogin>
+		<Motion>
+			<StyledLogin>
 			<StyledToastify />
 			<Header />
 			<ContainerMain>
@@ -76,6 +75,7 @@ export function Login() {
 						type="email"
 						placeholder="Digite seu e-mail aqui"
 						register={register("email")}
+						disabled={loading}
 					/>
 					{errors.email?.message && <span>{errors.email.message}</span>}
 					<Input
@@ -84,9 +84,10 @@ export function Login() {
 						type="password"
 						placeholder="Digite sua senha aqui"
 						register={register("password")}
+						disabled={loading}	
 					/>
 					{errors.password?.message && <span>{errors.password.message}</span>}
-					<Button>Entrar</Button>
+					<Button disabled={loading}>{loading ? "Logando..." : "Entrar"}</Button>
 					<div className="registerBox">
 						<p>Ainda não possui uma conta?</p>
 						<StyledLink to="/register">Cadastre-se</StyledLink>
@@ -94,5 +95,7 @@ export function Login() {
 				</Form>
 			</ContainerMain>
 		</StyledLogin>
+		</Motion>
+		
 	);
 }

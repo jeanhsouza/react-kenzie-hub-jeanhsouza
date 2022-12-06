@@ -2,55 +2,42 @@ import { Form } from "../../components/Form";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+
 import { ContainerMain } from "../../styles/container";
 import { StyledRegister } from "./style";
 import { StyledLink } from "../../components/Link/style";
+
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
+
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { registerSchema } from "./registerSchema";
+
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastify } from "../../styles/toastify";
 
+import { Motion } from "../../components/Motion";
+import { useState } from "react";
+
 export function Register() {
+	const [loading,setLoading] = useState(false)
 	const navigate = useNavigate();
-	const registerSchema = yup.object().shape({
-		name: yup
-			.string()
-			.required("O campo 'nome' é obrigatório.")
-			.min(3, "Nome precisa ter pelo menos 3 caracteres.")
-			.max(150, "Nome não pode ter mais 150 caracteres."),
-		email: yup
-			.string()
-			.required("O campo 'e-mail' é obrigatório.")
-			.email("Preencha um e-mail válido."),
-		password: yup
-			.string()
-			.required("O campo 'senha' é obrigatório.")
-			.matches(/^.{6,}$/, "A senha precisa ter pelo menos 6 caracteres"),
-		samePassword: yup
-			.string()
-			.required("O campo 'confirmar senha' é obrigatório.")
-			.matches(/^.{6,}$/, "A senha precisa ter pelo menos 6 caracteres")
-			.oneOf([yup.ref("password")], "As senhas devem ser iguais."),
-		bio: yup.string(),
-		contact: yup.string(),
-		course_module: yup.string().required("O campo 'Módulo' é obrigatório."),
-	});
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
 	} = useForm({
+		mode: "onBlur",
 		resolver: yupResolver(registerSchema),
 	});
 
 	async function submit(data) {
 		delete data.samePassword;
 		try {
+			setLoading(true)
 			const request = await api.post("users", data);
 
 			if (request) {
@@ -68,10 +55,14 @@ export function Register() {
 			});
 			console.log(error);
 		}
+		finally{
+			setLoading(false)
+		}
 	}
 
 	return (
-		<StyledRegister>
+		<Motion>
+			<StyledRegister>
 			<StyledToastify />
 			<Header>
 				<StyledLink to="/login">Voltar</StyledLink>
@@ -86,6 +77,7 @@ export function Register() {
 						type="text"
 						placeholder="Digite seu nome aqui"
 						register={register("name")}
+						disabled={loading}
 					/>
 					{errors.name?.message && <span>{errors.name.message}</span>}
 					<Input
@@ -94,6 +86,7 @@ export function Register() {
 						type="email"
 						placeholder="Digite seu e-mail aqui"
 						register={register("email")}
+						disabled={loading}
 					/>
 					{errors.email?.message && <span>{errors.email.message}</span>}
 					<Input
@@ -102,6 +95,7 @@ export function Register() {
 						type="password"
 						placeholder="Digite sua senha aqui"
 						register={register("password")}
+						disabled={loading}
 					/>
 					{errors.password?.message && <span>{errors.password.message}</span>}
 					<Input
@@ -110,6 +104,7 @@ export function Register() {
 						type="password"
 						placeholder="Confirme a sua senha"
 						register={register("samePassword")}
+						disabled={loading}
 					/>
 					{errors.samePassword?.message && (
 						<span>{errors.samePassword.message}</span>
@@ -120,6 +115,7 @@ export function Register() {
 						type="text"
 						placeholder="Fale sobre você"
 						register={register("bio")}
+						disabled={loading}
 					/>
 					{errors.bio?.message && <span>{errors.bio.message}</span>}
 					<Input
@@ -128,11 +124,12 @@ export function Register() {
 						type="text"
 						placeholder="Opção de Contato"
 						register={register("contact")}
+						disabled={loading}
 					/>
 					{errors.contact?.message && <span>{errors.contact.message}</span>}
 					<div className="SelectDiv">
 						<label htmlFor="course_module">Selecionar Módulo</label>
-						<select name="course_module" {...register("course_module")}>
+						<select name="course_module" {...register("course_module")} disabled={loading}>
 							<option value="">Selecione o Módulo</option>
 							<option value="Primeiro Módulo">Primeiro Módulo</option>
 							<option value="Segundo Módulo">Segundo Módulo</option>
@@ -146,9 +143,10 @@ export function Register() {
 						)}
 					</div>
 
-					<Button>Cadastrar</Button>
+					<Button disabled={loading}>{loading? "Cadastrando..." : "Cadastrar"}</Button>
 				</Form>
 			</ContainerMain>
 		</StyledRegister>
+		</Motion>
 	);
 }
