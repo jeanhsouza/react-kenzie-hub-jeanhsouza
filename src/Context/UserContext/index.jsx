@@ -14,8 +14,29 @@ export function UserProvider({ children }) {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		getProfileUser();
-	}, []);
+		async function getProfile() {
+			const token = localStorage.getItem("@kenzieHub:token");
+	
+			if (token) {
+				try {
+					setLoading(true);
+					const request = await api.get("profile", {
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					});
+	
+					setIsLogged(request.data);
+					navigate("/dashboard");
+				} catch (error) {
+					console.log(error);
+				} finally {
+					setLoading(false);
+				}
+			}
+		}
+		getProfile();
+	}, [navigate]);
 
 	async function submitLogin(data) {
 		try {
