@@ -1,10 +1,10 @@
 import { StyledSelectModal } from "./style";
 
-export function SelectModal() {
+export function SelectModal({ register, disabled }) {
 	return (
 		<StyledSelectModal>
 			<label htmlFor="status">Selecionar Módulo</label>
-			<select name="status">
+			<select name="status" {...register} disabled={disabled}>
 				<option value="">Selecione o Módulo</option>
 				<option value="Iniciante">Iniciante</option>
 				<option value="Intermédiario">Intermédiario</option>

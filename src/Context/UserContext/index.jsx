@@ -6,8 +6,8 @@ import { api } from "../../services/api";
 
 export const UserContext = createContext();
 
-export function UserProvider({ children }) {	
-    const [isOpen, setIsOpen] = useState(false)
+export function UserProvider({ children }) {
+	const [isOpen, setIsOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [isAdding, setIsAdding] = useState(false);
 	const [isLogged, setIsLogged] = useState(null);
@@ -23,16 +23,14 @@ export function UserProvider({ children }) {
 			const request = await api.post("sessions", data);
 			const response = await request.data;
 
-			const {token, user} = response;
+			const { token, user } = response;
 
 			if (request) {
 				toast.success("Login realizado com sucesso!", {
 					position: toast.POSITION.TOP_RIGHT,
 				});
 				localStorage.setItem("@kenzieHub:token", token);
-				localStorage.setItem(
-					"@kenzieHub:userID",user.id
-				);
+				localStorage.setItem("@kenzieHub:userID", user.id);
 				setIsLogged(user);
 				navigate("/dashboard");
 			}
@@ -85,24 +83,39 @@ export function UserProvider({ children }) {
 				setIsLogged(request.data);
 			} catch (error) {
 				console.log(error);
-			}
-			finally{
+			} finally {
 				setLoading(false);
 			}
 		}
+	}
+
+	function submitLogoff() {
+		toast.success("Logoff realizado com sucesso!", {
+			position: toast.POSITION.TOP_RIGHT,
+		});
+		setTimeout(() => {
+			localStorage.removeItem("@kenzieHub:token");
+			localStorage.removeItem("@kenzieHub:userID");
+			setIsLogged([]);
+			navigate("/login");
+		}, 1000);
 	}
 
 	return (
 		<UserContext.Provider
 			value={{
 				loading,
+				getProfileUser,
 				navigate,
 				submitLogin,
 				submitRegister,
+				submitLogoff,
 				isLogged,
 				setIsLogged,
-				isOpen, setIsOpen,
-				isAdding, setIsAdding
+				isOpen,
+				setIsOpen,
+				isAdding,
+				setIsAdding,
 			}}
 		>
 			{children}
