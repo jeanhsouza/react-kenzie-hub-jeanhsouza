@@ -7,6 +7,5 @@ export const loginSchema = yup.object().shape({
 		.email("Preencha um e-mail válido"),
 	password: yup
 		.string()
-		.required("O campo 'senha' é obrigatório")
-		.matches(/^.{6,}$/, "A senha precisa ter pelo menos 6 caracteres"),
+		.required("O campo 'senha' é obrigatório"),
 });
