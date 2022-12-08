@@ -6,11 +6,11 @@ export const StyledSelectModal = styled.div`
 	flex-direction: column;
 	gap: 1rem;
 
-	>label {
+	> label {
 		font-size: var(--font-size-4);
 	}
 
-	>select {
+	> select {
 		background: var(--gray300);
 		color: var(--grey400);
 		border: 0.0625rem solid var(--gray300);
@@ -22,7 +22,7 @@ export const StyledSelectModal = styled.div`
 		font-size: var(--font-size-3);
 		line-height: var(--line-heigh);
 
-		>option {
+		> option {
 			color: var(--grey400);
 			:focus {
 				border: 0.0625rem solid var(--gray500);

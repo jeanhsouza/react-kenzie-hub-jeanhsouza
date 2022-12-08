@@ -7,11 +7,11 @@ export const StyledTechCard = styled.li`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	padding: 20px;
-	gap: 12px;
+	padding: 1.25rem;
+	gap: 0.75rem;
 
 	background-color: var(--gray100);
-	border-radius: 4px;
+	border-radius: 0.25rem;
 
 	&:hover {
 		background-color: var(--gray300);

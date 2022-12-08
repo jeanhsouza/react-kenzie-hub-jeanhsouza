@@ -1,7 +1,6 @@
 import { StyledTechCard } from "./style";
 
-export function TechCard({elem,click}) {
-	
+export function TechCard({ elem, click }) {
 	return (
 		<StyledTechCard onClick={click}>
 			<h3>{elem.title}</h3>

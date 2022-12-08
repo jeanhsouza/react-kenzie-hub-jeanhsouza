@@ -1,16 +1,23 @@
 import { useContext } from "react";
-import { UserContext } from "../../../Context/UserContext";
-import {Button} from "../../Button"
-import {Form} from "../../Form"
-import {Input} from "../../Input"
+import { useForm } from "react-hook-form";
+import { Button } from "../../Button";
+import { Form } from "../../Form";
+import { Input } from "../../Input";
 import { SelectModal } from "../SelectModal";
 
-export function AddTechModal() {
-	const { setIsOpen } = useContext(UserContext);
+import { yupResolver } from "@hookform/resolvers/yup";
+import { addTechModalSchema } from "./AddTechModalSchema";
+import { TechContext } from "../../../Context/TechContext";
 
-	function closeModal() {
-		setIsOpen(false);
-	}
+export function AddTechModal() {
+	const { submitAddTechModal, closeModal } = useContext(TechContext);
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({ mode: "OnBlur", resolver: yupResolver(addTechModalSchema) });
+
 	return (
 		<>
 			<div className="modalHeader">
@@ -18,14 +25,17 @@ export function AddTechModal() {
 				<Button click={closeModal}>X</Button>
 			</div>
 			<div className="modalContent">
-				<Form>
+				<Form submit={handleSubmit(submitAddTechModal)}>
 					<Input
 						label="Nome"
-						name="name"
+						name="title"
 						type="text"
 						placeholder="Digite o nome da tecnologia"
+						register={register("title")}
 					></Input>
-					<SelectModal />
+					{errors.title?.message && <span>{errors.title.message}</span>}
+					<SelectModal register={register("status")} />
+					{errors.status?.message && <span>{errors.status.message}</span>}
 					<Button>Cadastrar Tecnologia</Button>
 				</Form>
 			</div>
