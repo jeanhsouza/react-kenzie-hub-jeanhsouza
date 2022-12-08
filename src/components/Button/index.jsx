@@ -1,8 +1,8 @@
 import { StyledButton } from "./style";
 
-export function Button({ children, click }) {
+export function Button({ children, click, type = "submit" }) {
 	return (
-		<StyledButton type="submit" onClick={click}>
+		<StyledButton type={type} onClick={click}>
 			{children}
 		</StyledButton>
 	);
